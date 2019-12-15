@@ -239,16 +239,4 @@ ExitApp
 Return
 
 GuiClose:
-FileAppend, DEL "%A_ScriptFullPath%"`nDEL "%A_ScriptDir%\del.bat", del.bat
-
-Loop {
-
-   if (FileExist("del.bat"))
-
-      break
-
-}
-
-Run, del.bat,, Hide
 ExitApp
-return
