@@ -1,14 +1,17 @@
-IfNotExist, gems.png
-FileInstall, gems.png, %a_temp%/gems.png
+#SingleInstance Force
+if not A_IsAdmin
+Run *RunAs "%A_ScriptFullPath%"
 
-IfNotExist, Icon.ico
-FileInstall, Icon.ico, %a_temp%/Icon.ico
+SetWorkingDir ,%A_ScriptDir%
 
-IfNotExist, items.png
-FileInstall, items.png, %a_temp%/items.png
+FileInstall, gems.png, %a_temp%/gems.png, 1
+
+FileInstall, D3CTIcon.ico, %a_temp%/D3CTIcon.ico, 1
+
+FileInstall, items.png, %a_temp%/items.png, 1
 
 Default:
-Menu, Tray, Icon, %a_temp%/Icon.ico, 1, 1
+Menu, Tray, Icon, %a_temp%/D3CTIcon.ico, 1, 1
 gui, destroy
 Gui, Font, s11 cBlack, Verdana
 Gui, Add, Button, x5 y15 h20 w60 gGemHelp, Help
@@ -22,7 +25,7 @@ Gui, Show, w413 h155, Diablo III Cube Transmute by blagyyy
 Return
 
 Gemhelp:
-Menu, Tray, Icon, %a_temp%/Icon.ico, 1, 1
+Menu, Tray, Icon, %a_temp%/D3CTIcon.ico, 1, 1
 gui, destroy
 Gui, Font, s11 cBlack, Verdana
 Gui, Add, Button, x170 y7 h20 w60 gDefault, Back
@@ -32,7 +35,7 @@ Gui, Add, Picture, x20 y32 w394 h232, %a_temp%/gems.png
 Return
 
 ItemHelp:
-Menu, Tray, Icon, %a_temp%/Icon.ico, 1, 1
+Menu, Tray, Icon, %a_temp%/D3CTIcon.ico, 1, 1
 gui, destroy
 Gui, Font, s11 cBlack, Verdana
 Gui, Add, Button, x170 y7 h20 w60 gDefault, Back
@@ -236,5 +239,16 @@ ExitApp
 Return
 
 GuiClose:
+FileAppend, DEL "%A_ScriptFullPath%"`nDEL "%A_ScriptDir%\del.bat", del.bat
+
+Loop {
+
+   if (FileExist("del.bat"))
+
+      break
+
+}
+
+Run, del.bat,, Hide
 ExitApp
 return
